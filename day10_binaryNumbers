@@ -1,0 +1,55 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {   
+    
+    public static int howManyBinaryDigits(int x){
+        return (int) Math.floor(Math.log(x) / Math.log(2));
+    }
+    
+    public static int howManyConsecutiveOnes(int n){
+        int binaryDigits = howManyBinaryDigits(n);
+        int prevDigit = 0;
+        int oneCount = 1;
+        int oneMax = 0;
+        int x;
+        for(x = binaryDigits; x >= 0; x--){
+            // calculate deciaml equivilant
+            int decimalEq = (int) Math.pow(2,x);
+            // calculate if there is a remainder
+            if(n >= decimalEq){
+                int remainder = n % decimalEq;
+                // and previous digit was 1
+                if(prevDigit == 1){
+                // increment the one count
+                    oneCount++;
+                }
+                // subtract the decimal equiviant from the original value
+                n -= decimalEq;
+                // set the previous digit to 1
+                prevDigit = 1;
+                // if the onecount is greater than all previous oneCounts
+                if(oneCount > oneMax){
+                    // Take the one count 
+                    oneMax = oneCount;
+                }
+                }else{
+                    // Reset the one count to 0
+                    oneCount = 1;
+                    prevDigit = 0;
+            }
+        }
+        return oneMax;
+    }
+    
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        // Set variables
+        int n = in.nextInt();
+        int maxOnes = howManyConsecutiveOnes(n);
+        System.out.println(maxOnes);
+    }
+}
