@@ -1,0 +1,28 @@
+import java.io.*;
+import java.util.*;
+
+
+public class Solution {
+
+    public static void main(String[] args) {
+        // Initiate Scanner
+        Scanner in = new Scanner(System.in);
+        // Initiate variable for total number of Array entries
+        int n = in.nextInt();
+        // Initiate array
+        int[] arr = new int[n];
+        // Initiate array for reversed order
+        int[] arrRev = new int[n];    
+        //cycle through the the original array
+        for(int i=0; i < n; i++){
+            // place current array entry to mirrored side
+            arr[((n-1)-i)] = in.nextInt();
+        }
+
+        in.close();
+        // Print reversed order
+        for(int i=0; i < n; i++){
+            System.out.print(arr[i] + " ");
+        }
+    }
+}
