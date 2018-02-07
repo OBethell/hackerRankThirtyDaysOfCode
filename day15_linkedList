@@ -1,0 +1,55 @@
+import java.io.*;
+import java.util.*;
+
+class Node {
+	int data;
+	Node next;
+	Node(int d) {
+        data = d;
+        next = null;
+    }
+}
+
+class Solution {
+    public static  Node insert(Node head,int data) {
+        // Set temporary node to store new data
+        Node temp = new Node(data);
+        // If head is empty...
+        if(head == null){
+            // return new data
+            return temp;
+        } else{
+            // Set previous entry as head
+            Node current = head;
+            // Cycle to front of list
+            while(current.next != null){
+                // set current node to next one
+                current = current.next;
+            }
+            // Now at the front set the new data to the front list
+            current.next = temp;
+        }
+        // Return head when finished
+        return head;
+    }
+	public static void display(Node head) {
+        Node start = head;
+        while(start != null) {
+            System.out.print(start.data + " ");
+            start = start.next;
+        }
+    }
+
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        Node head = null;
+        int N = sc.nextInt();
+
+        while(N-- > 0) {
+            int ele = sc.nextInt();
+            head = insert(head,ele);
+        }
+        display(head);
+        sc.close();
+    }
+}
