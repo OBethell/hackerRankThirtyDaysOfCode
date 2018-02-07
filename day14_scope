@@ -1,0 +1,54 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+
+class Difference {
+    private int[] elements;
+    public int maximumDifference;
+    
+    // Declare counting variables
+    int x = 0;
+    int y = 0;
+    
+    // Constructor
+    public Difference(int[] a){
+    elements = a;               // Set input into elements
+    maximumDifference = 0;      // Set maximumDifference to zero
+    }
+    public int computeDifference(){
+    // Cycle through every element in inputs
+    for(x = 0; x < elements.length; x++){
+        // Cycle through every other element in inputs
+        for (y = (x + 1); y < elements.length; y++){
+            // If a absoulte difference is bigger than the current maximiumDifference
+            if(maximumDifference < Math.abs(elements[x] - elements[y])){
+                // Set new maximumDifference
+                maximumDifference = Math.abs(elements[x] - elements[y]);
+            }
+        }
+    }
+    return maximumDifference;
+}
+} // End of Difference class
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] a = new int[n];
+        for (int i = 0; i < n; i++) {
+            a[i] = sc.nextInt();
+        }
+        sc.close();
+
+        Difference difference = new Difference(a);
+
+        difference.computeDifference();
+
+        System.out.print(difference.maximumDifference);
+    }
+}
