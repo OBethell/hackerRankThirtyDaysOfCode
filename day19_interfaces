@@ -1,0 +1,38 @@
+import java.io.*;
+import java.util.*;
+
+interface AdvancedArithmetic{
+   int divisorSum(int n);
+}
+//Write your code here
+// Declare Calculator class that implements interface
+class Calculator implements AdvancedArithmetic{
+    // Declare method that sums all whole divisors
+    public int divisorSum(int n){
+        // Declare sum variable
+        int sum = 0;
+        // For all possible divisors...
+        for(int x = 1; x <= n; x++){
+            // If the divisor is even
+            if(n % x == 0){
+                // Add divisor to the running total
+                sum += x;
+            }
+        }
+        // Return final result
+        return sum;
+    }
+}
+class Solution {
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        scan.close();
+        
+      	AdvancedArithmetic myCalculator = new Calculator(); 
+        int sum = myCalculator.divisorSum(n);
+        System.out.println("I implemented: " + myCalculator.getClass().getInterfaces()[0].getName() );
+        System.out.println(sum);
+    }
+}
