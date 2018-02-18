@@ -1,0 +1,95 @@
+import java.io.*;
+import java.util.*;
+class Node{
+	int data;
+	Node next;
+	Node(int d){
+        data=d;
+        next=null;
+    }
+	
+}
+class Solution
+{
+// Find the number of Entries in non-decreasing list
+public static int howManyEntries(int noOfEntries, Node head){
+    while(head != null){
+        noOfEntries++;
+        head = head.next;
+    }
+    return noOfEntries;
+}
+
+public static Node removeDuplicates(Node head) {
+    // Find out total number of entries
+    int noOfEntries = 0;
+    noOfEntries = howManyEntries(noOfEntries, head);
+    
+    // Initialise previous data variable
+    int prevValue = head.data;
+
+    // Initalise first entry in new Node
+    Node newHead = new Node(head.data);
+
+    // Set the head on to the next
+    head = head.next;
+
+    // While the node exsist
+    while(head != null){
+        // If new head.data is larger than previous value
+        if(prevValue < head.data){
+            // set the previous value to the new head.data
+            prevValue = head.data;
+            // insert new value to Node
+            newHead = insert(newHead, head.data);
+            // Set the head on to the next
+            head = head.next;
+        // Or its a repeat value
+        }else{
+            // Set the head on to the next
+            head = head.next;
+        }
+    }
+    // Return new non Duplicate Node
+    return newHead;
+}
+    public static  Node insert(Node head,int data)
+    {
+        Node p=new Node(data);			
+        if(head==null)
+            head=p;
+        else if(head.next==null)
+            head.next=p;
+        else
+        {
+            Node start=head;
+            while(start.next!=null)
+                start=start.next;
+            start.next=p;
+
+        }
+        return head;
+    }
+    public static void display(Node head)
+        {
+              Node start=head;
+              while(start!=null)
+              {
+                  System.out.print(start.data+" ");
+                  start=start.next;
+              }
+        }
+        public static void main(String args[])
+        {
+              Scanner sc=new Scanner(System.in);
+              Node head=null;
+              int T=sc.nextInt();
+              while(T-->0){
+                  int ele=sc.nextInt();
+                  head=insert(head,ele);
+              }
+              head=removeDuplicates(head);
+              display(head);
+
+       }
+    }
