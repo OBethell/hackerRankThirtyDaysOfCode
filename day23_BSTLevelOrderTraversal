@@ -1,0 +1,104 @@
+import java.io.*;
+import java.util.*;
+class Node{
+    Node left,right;
+    int data;
+    Node(int data){
+        this.data=data;
+        left=right=null;
+    }
+}
+class Solution{
+    
+// Place root of Binary Search Tree in level 0
+public static int[][] intialiseLevelOrderArray(Node root, int[][] levelArray){
+    if(root != null){
+        levelArray[0][0] = root.data;
+    }
+    return levelArray;
+}
+
+// If slot in array is taken move to the next
+public static int findEmptySlot(int[][] levelArray, int level, int x){
+    if(levelArray[level][x] != 0){
+        x++;
+        x = findEmptySlot(levelArray, level, x);
+    }
+    return x;
+}
+
+// cycle through each nodes left and right and add to level array if data exsits.
+public static int[][] cycleThrough(Node root, int level, int[][] levelArray){
+    int x = 0;
+    level++;
+    if(root == null){
+        return levelArray;
+    }
+    if(root.left != null){
+        x = findEmptySlot(levelArray, level, x);
+        levelArray[level][x] = root.left.data;
+        x++;
+    }
+    if(root.right != null){
+        x = findEmptySlot(levelArray, level, x);
+        levelArray[level][x] = root.right.data;
+        x++;
+    }
+    cycleThrough(root.left, level, levelArray);
+    cycleThrough(root.right, level, levelArray);
+    return levelArray;
+}
+
+static void levelOrderArray(Node root){
+
+    // Declare variables
+    int[][] levelArray = new int[10][10];
+    int level = 0;  
+
+    // intialise Array
+    levelArray = intialiseLevelOrderArray(root, levelArray);
+
+    // Cycle through nodes adding them to array
+    levelArray = cycleThrough(root, level, levelArray);
+
+    // Print arrays in accending level order
+    for(int x = 0; x < 10; x++){
+        for(int z = 0; z < 10; z++){
+            // print result if non zero
+            if(levelArray[x][z] != 0){
+                System.out.print(levelArray[x][z] + " ");
+            }
+        }
+    }
+}
+static void levelOrder(Node root){
+    levelOrderArray(root);
+}
+	public static Node insert(Node root,int data){
+        if(root==null){
+            return new Node(data);
+        }
+        else{
+            Node cur;
+            if(data<=root.data){
+                cur=insert(root.left,data);
+                root.left=cur;
+            }
+            else{
+                cur=insert(root.right,data);
+                root.right=cur;
+            }
+            return root;
+        }
+    }
+    public static void main(String args[]){
+            Scanner sc=new Scanner(System.in);
+            int T=sc.nextInt();
+            Node root=null;
+            while(T-->0){
+                int data=sc.nextInt();
+                root=insert(root,data);
+            }
+            levelOrder(root);
+        }	
+}
