@@ -1,0 +1,96 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+    
+    // Function to add variables into a 3 long array
+    public static void addDate(int[] date, int d, int m, int y){
+        date[0] = d;
+        date[1] = m;
+        date[2] = y;
+    }
+
+    // Function to calculate if the book is late
+    public static boolean isLate(int[] actual, int[] expected){
+        if(actual[2] > expected[2]){
+            return true;
+        }else if(actual[1] > expected[1] && actual[2] == expected[2]){
+            return true;
+        }else if(actual[0] > expected[0] && actual[1] == expected[1] && actual[2] == expected[2]){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    // Method to calcuate fine that isn't flat
+    public static int calcualteSubFine(int diff, int maxDate, int fineRate){
+        if(diff >= 0){
+            return diff * fineRate;
+        }else{
+            return (maxDate + diff) * fineRate;
+        }
+    }
+
+    public static int calculateTotalFine(int[] actual, int[] expected, int[] maxDate, int[] fineRate){
+        int totalFine = 0;
+        int[] diff = new int[3];
+       
+        // Calculate difference
+        for(int y = 0; y <= 2; y++){
+            diff[y] = actual[y] - expected[y];
+        }
+        // Cycle through day fines and then month fines if any
+        for(int y = 0; y <= 1 ; y++){
+            // If there is a difference...
+            if(diff[y] != 0){
+                // Apply relavent fine
+                totalFine = calcualteSubFine(diff[y], maxDate[y], fineRate[y]);
+            }
+            // If the book is over a year late
+            if(diff[2] != 0){
+                // Apply flat rate
+                totalFine = fineRate[2];
+            }
+        }
+        return totalFine;
+    }
+
+    public static void main(String[] args) {
+        // Declare variables        
+        int[] actual = new int[3];
+        int[] expected = new int[3];
+        int[] maxDate = new int[3];
+        int[] fineRate = new int[3];
+                
+        int maxDays = 31;
+        int maxMonths = 12;
+        int maxYears = 3000;
+        
+        int dayRate = 15;
+        int monthRate = 500;
+        int yearRate = 10000;
+
+        // Collect inputs
+        Scanner sc = new Scanner(System.in);
+
+        // Add input dates and rates to array
+        addDate(actual, sc.nextInt(), sc.nextInt(), sc.nextInt());
+        addDate(expected, sc.nextInt(), sc.nextInt(), sc.nextInt());
+        addDate(maxDate, maxDays, maxMonths, maxYears);
+        addDate(fineRate, dayRate, monthRate, yearRate);
+        
+        // If on time print no fee (0)
+        if(isLate(actual, expected) == false){
+            System.out.println("0");
+        }else{
+            // If late print relavant fine
+            System.out.println(calculateTotalFine(actual, expected, maxDate, fineRate));
+        }
+        
+
+    }
+}
