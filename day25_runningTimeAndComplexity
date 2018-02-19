@@ -1,0 +1,44 @@
+import java.io.*;
+import java.util.*;
+import java.math.*;
+
+public class Solution {
+    // Work out is Prime method
+        // Returns false if not prime and true if prime
+    public static boolean isPrime(int x){
+        // exclude 1
+        if(x == 1){
+            return false;
+        }
+        // include 2 reject al other even numbers
+        if(x != 2 && x % 2 == 0){
+            return false;
+        }
+        // Cycle through all odd numbers lower than x and find out if they divisors
+        for(int y = 3; y < x; y = y + 2){
+            if(x % y == 0){
+                return false;
+            }
+        }
+        // Then number must be prime
+        return true;
+        
+    }
+
+    public static void main(String[] args) {
+        // Collect inputs
+        Scanner sc=new Scanner(System.in);
+        int T=sc.nextInt();
+        
+        while(T-->0){
+            int x = sc.nextInt();
+            
+            // if passed test print result
+            if(isPrime(x) == true){
+                System.out.println("Prime");
+            }else{
+                System.out.println("Not prime");
+            }
+        }
+    }
+}
