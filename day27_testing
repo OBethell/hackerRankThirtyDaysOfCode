@@ -1,0 +1,57 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+
+public class Solution {
+    
+    public static void main(String[] args) {
+        // Generate inputs an print to console
+        System.out.println("5");
+        System.out.println("4 3");
+        System.out.println("-1 0 1 4");
+        System.out.println("5 3");
+        System.out.println("0 2 -4 -6 9");
+        System.out.println("6 4");
+        System.out.println("1 0 -3 4 -2 7");
+        System.out.println("8 3");
+        System.out.println("2 4 0 0 33 -8 2 -9");
+        System.out.println("3 2");
+        System.out.println("0 -99 3");
+        
+        Scanner sc = new Scanner(System.in);
+        int numberOfLectures = sc.nextInt();
+        
+        boolean[] lectureCanceled = new boolean[numberOfLectures];
+
+        for(int x = 0; x < numberOfLectures; x++){
+            lectureCanceled[x] = true;
+            int numberOfStudentsInClass = sc.nextInt();
+            int cancelationThreshold = sc.nextInt();
+
+            int[] studentArrivalTimes = new int[numberOfStudentsInClass];
+            
+            int numberOfStudentsOnTime = 0;
+            for(int y = 0; y < numberOfStudentsInClass; y++){
+                studentArrivalTimes[y] = sc.nextInt();
+                if(studentArrivalTimes[y] <= 0){
+                    numberOfStudentsOnTime++;
+                }
+                if(numberOfStudentsOnTime >= cancelationThreshold){
+                    lectureCanceled[x] = false;
+                }
+                }
+            }
+        
+        for(Boolean b:lectureCanceled){
+            if(b == true){
+                System.out.println("YES");
+            }else{
+                System.out.println("NO");
+            }
+        }
+        
+}
+}
