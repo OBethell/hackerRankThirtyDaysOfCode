@@ -1,0 +1,44 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void alphabetise(LinkedList<String> names){
+        for(int y = 0; y < names.size(); y++){
+            for(int x = 0; x < names.size() - 1; x++){
+                if(names.get(x).compareTo(names.get(x + 1)) > 0){
+                    String temp = names.get(x + 1);
+                    names.set(x + 1, names.get(x));
+                    names.set(x, temp);
+                }
+            }
+        }
+    }
+    
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int N = in.nextInt();
+        // Declare variable for gmail domain
+        String emailDomain = "@gmail.com";
+        LinkedList<String> names = new LinkedList<String>();
+        
+        // Collect all names and emails
+        for(int a0 = 0; a0 < N; a0++){
+            String firstName = in.next();
+            String emailID = in.next();
+            // Filter out only Gmail.com accounts
+            if(emailID.toLowerCase().contains(emailDomain.toLowerCase()) == true){
+                names.add(firstName);
+            }
+        }
+        
+        alphabetise(names);
+        // Print Results
+        for(int x = 0; x < names.size(); x++){
+            System.out.println(names.get(x));
+        }
+    }
+}
