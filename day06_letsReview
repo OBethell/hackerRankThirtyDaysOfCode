@@ -5,33 +5,36 @@ import java.math.*;
 import java.util.regex.*;
 
 public class Solution {
+    
+    // Method to pop list to string builder
+    public static void linkedListToStringBuilder(StringBuilder sb, LinkedList<Character> list){
+        while(list.isEmpty() == false){ // While list is not empty
+            sb.append(list.pop());
+        }
+    }
 
     public static void main(String[] args) {
         /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
         String[] words = new String[n];
-        for(int x = 0 ;x <= n-1;x++){
-            int evenCount = 0;
-            int oddCount = 0;
-            words[x] = scanner.next();
-            char[] letters=words[x].toCharArray();
-            int length = letters.length;
-            char[] lettersEven = new char[(length/2)+(length%2)];
-            char[] lettersOdd = new char[length/2];
-            for(int y = 0; y < length; y++){
+        for(int i = 0 ; i < n; i++){
+            char[] letters = (scanner.next()).toCharArray();
+            
+            LinkedList<Character> lettersEven = new LinkedList<Character>();
+            LinkedList<Character> lettersOdd = new LinkedList<Character>();
+
+            for(int y = 0; y < letters.length; y++){
                 if(y % 2 == 0){
-                    lettersEven[evenCount] = letters[y];
-                    evenCount++;
+                    lettersEven.add(letters[y]);
                 }else if (y % 2 == 1){
-                    lettersOdd[oddCount] = letters[y];
-                    oddCount++;
+                    lettersOdd.add(letters[y]);
                 }
             }
             StringBuilder sb = new StringBuilder();
-            sb.append(lettersEven);
+            linkedListToStringBuilder(sb, lettersEven);
             sb.append(" ");
-            sb.append(lettersOdd);
+            linkedListToStringBuilder(sb, lettersOdd);
             System.out.println(sb);
         }
     }
