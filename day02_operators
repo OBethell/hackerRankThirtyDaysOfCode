@@ -2,7 +2,12 @@ import java.util.*;
 import java.math.*;
 
 public class Arithmetic {
-
+    
+    // Method return percentage of total
+    public static double calculatePercentage(double total, double percentage){  // Casts percentage as a double
+        return total*(percentage/100);
+    }
+    
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         double mealCost = scan.nextDouble(); // original meal price
@@ -10,10 +15,13 @@ public class Arithmetic {
         int taxPercent = scan.nextInt(); // tax percentage
         scan.close();
       
-        // Write your calculation code here.
-        double tip = mealCost*(tipPercent*1.0/100);
-        double tax = mealCost*(taxPercent*1.0/100);
+        // Calculate tip & tax
+        double tip = calculatePercentage(mealCost, tipPercent);
+        double tax = calculatePercentage(mealCost, taxPercent);
+        
+        // Total up the bill
         double tot = mealCost + tip + tax;
+        
         // cast the result of the rounding operation to an int and save it as totalCost 
         int totalCost = (int) Math.round(tot);
       
