@@ -11,20 +11,15 @@ public class Solution {
       scan.close();
       String ans="";
           
-      // if 'n' is NOT evenly divisible by 2 (i.e.: n is odd)
+      // if 'n' is NOT evenly divisible by 2 (i.e. n is odd)
       if(n%2==1){
          ans = "Weird";
-      }
-      else{if(2<=n && n<=5){
+      }else if(2<=n && n<=5){
           ans = "Not Weird";
-      }else{
-          if(6<=n && n<=20){
+      }else if(6<=n && n<=20){
               ans = "Weird";
-          }
-      }
-          if(n>20){
+      }else if(n>20){
           ans = "Not Weird";
-      }
       }
       System.out.println(ans);
    }
