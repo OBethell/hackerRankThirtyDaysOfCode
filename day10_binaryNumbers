@@ -6,50 +6,62 @@ import java.util.regex.*;
 
 public class Solution {   
     
-    public static int howManyBinaryDigits(int x){
+    // Method to calculate how many binary digits represent input
+    static int howManyBinaryDigits(int x){
         return (int) Math.floor(Math.log(x) / Math.log(2));
     }
     
-    public static int howManyConsecutiveOnes(int n){
-        int binaryDigits = howManyBinaryDigits(n);
-        int prevDigit = 0;
-        int oneCount = 1;
-        int oneMax = 0;
-        int x;
-        for(x = binaryDigits; x >= 0; x--){
-            // calculate deciaml equivilant
-            int decimalEq = (int) Math.pow(2,x);
-            // calculate if there is a remainder
-            if(n >= decimalEq){
-                int remainder = n % decimalEq;
-                // and previous digit was 1
-                if(prevDigit == 1){
-                // increment the one count
-                    oneCount++;
-                }
-                // subtract the decimal equiviant from the original value
-                n -= decimalEq;
-                // set the previous digit to 1
-                prevDigit = 1;
-                // if the onecount is greater than all previous oneCounts
-                if(oneCount > oneMax){
-                    // Take the one count 
-                    oneMax = oneCount;
-                }
-                }else{
-                    // Reset the one count to 0
-                    oneCount = 1;
-                    prevDigit = 0;
+    // Method to convert decimal input to binary Linked List
+    static LinkedList<Boolean> convertToBinary(int input){
+        // Calculate the minium amount of binary digits to represent input
+        int binaryDigits = howManyBinaryDigits(input);
+        // Initalise list of binary input
+        LinkedList<Boolean> binaryInput = new LinkedList<Boolean>();
+        // Cycle through binary digits in decending order
+        for(int i = binaryDigits; i >= 0; i--){
+            // Calculate the decimal value represented by the current coloum
+            int binaryColumn = (int) Math.pow(2,i);
+            // If this value is smaller than the input...
+            if(binaryColumn <= input){
+                // Set the binary output to true and remove the decimal value from the input
+                binaryInput.add(true);
+                input -= binaryColumn;
+            // Else set the binary output to false
+            }else{
+                binaryInput.add(false);
             }
         }
-        return oneMax;
+        return binaryInput;
+    }
+    
+    static int howManyConsecutiveOnes(int input){
+        
+        // Initalise: LinkedList of binary Input; Inital size of list; Consecutive Run count; and final answer.
+        LinkedList<Boolean> binaryInput = convertToBinary(input);
+        int initalSizeOfBinaryInput = binaryInput.size();
+        int currentConsecutiveRun = 0;
+        int ans = 0;
+        
+        // Cycle throught the linked list adding to the consecutive count
+        for(int i = 0; i < initalSizeOfBinaryInput; i++){
+            if(binaryInput.pop() == true){
+                currentConsecutiveRun++;
+                //System.out.println(binaryInput.size());
+                // And producing a new answer if the current consecutive count is the longest
+                if(currentConsecutiveRun > ans){
+                    ans = currentConsecutiveRun;
+                }
+            // Else reset the consecutive run back to zero
+            }else{
+                currentConsecutiveRun = 0;
+            }
+        }
+        return ans;
     }
     
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        // Set variables
         int n = in.nextInt();
-        int maxOnes = howManyConsecutiveOnes(n);
-        System.out.println(maxOnes);
+        System.out.println(howManyConsecutiveOnes(n));
     }
 }
