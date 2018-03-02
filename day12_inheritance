@@ -23,25 +23,16 @@ class Person {
 class Student extends Person{
 	private int[] testScores;
 
-    /*	
-    *   Class Constructor
-    *   
-    *   @param firstName - A string denoting the Person's first name.
-    *   @param lastName - A string denoting the Person's last name.
-    *   @param id - An integer denoting the Person's ID number.
-    *   @param scores - An array of integers denoting the Person's test scores.
-    */
-    // Write your constructor here
+    // Student Constructor
     public Student(String firstName, String lastName, int identification, int [] scores){
+        // Inherits; First name; Last name; Identifications
         super(firstName, lastName, identification);
         this.testScores = scores;
     }
-    /*	
-    *   Method Name: calculate
-    *   @return A character denoting the grade.
-    */
-    // Write your method here
+
+    // Method calculating average test score and grade
     public char calculate(){
+        // Calcuate Average Test Score
         int sum = 0;
         int numOfTests = this.testScores.length;
         char result = 'X';
@@ -50,7 +41,7 @@ class Student extends Person{
         }
         double averageTestScore = sum / numOfTests;
         
-        
+        // Grades Average Test score
         if(90 <= averageTestScore && averageTestScore <= 100){
             result = 'O';
         }else if(80 <= averageTestScore && averageTestScore < 90){
