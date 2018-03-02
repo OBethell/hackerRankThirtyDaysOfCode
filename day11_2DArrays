@@ -5,48 +5,60 @@ import java.math.*;
 import java.util.regex.*;
 
 public class Solution {
-    
-    public static int addToSubTotal(int i, int subTotal){
-        subTotal += i;
-        return subTotal;
-    }
-    
-    public static int calcSubTotal(int i, int j, int grandTotal, int arr[][]){
-        int subTotal = 0;
-        for(int x=0; x < 3; x++){
-            if(x == 0 || x == 2){
-                subTotal = addToSubTotal(arr[i][j + x], subTotal);
-                subTotal = addToSubTotal(arr[i + 2][j + x], subTotal);
-            }else if(x == 1){                
-                subTotal = addToSubTotal(arr[i][j + x], subTotal);
-                subTotal = addToSubTotal(arr[i + 1][j + x], subTotal);                        
-                subTotal = addToSubTotal(arr[i + 2][j + x], subTotal);
 
-            }else{
+    // Method to calculate SubTotal
+    public static int calcSubTotal(int i, int j, int arr[][]){
+        
+        // Intitalise subTotal
+        int subTotal = 0;
+        
+        // Cycle through  columns 0 - 2
+        for(int x = 0; x < 3; x++){
+            // for both columns 0 and 2 add the bottom and top rows 
+            if(x == 0 || x == 2){
+                subTotal += arr[i][j + x];
+                subTotal += arr[i + 2][j + x];
+        
+            // for the middle column add all  three rows
+            }else if(x == 1){                
+                subTotal += arr[i][j + x];
+                subTotal += arr[i + 1][j + x];                        
+                subTotal += arr[i + 2][j + x];
             }
         }
-        if(subTotal > grandTotal){
-            grandTotal = subTotal;
-        }
-        return grandTotal;
+        // return the subTotal
+        return subTotal;
     }
 
     public static void main(String[] args) {
+        // Initalise scanner and the input array
         Scanner in = new Scanner(System.in);
         int arr[][] = new int[6][6];
-        int grandTotal = -42;
+        
+        // Collect input
         for(int i=0; i < 6; i++){
             for(int j=0; j < 6; j++){
                 arr[i][j] = in.nextInt();
             }            
         }       
+        
+        // Initalise grandTotal value which is set ot the first hourglass in the array
+        int grandTotal = calcSubTotal(0, 0, arr);
+        
+        // Cycle through all possible hourglass totals
         for(int i=0; i < 6; i++){
             for(int j=0; j < 6; j++){
-                if((i + 2) < arr.length && (j + 2) < arr[i].length){ 
-                    grandTotal = calcSubTotal(i, j, grandTotal, arr);                  
+                if((i + 2) < arr.length && (j + 2) < arr[i].length){
+                    // Calculate the subTotal
+                    int subTotal = calcSubTotal(i, j, arr);
+                    // Increase the GrandTotal is new Subtotal is greater than ol grand total
+                    if(subTotal > grandTotal){
+                        grandTotal = subTotal;
+                    }               
                 }
             }
         }
+        // Output the result
         System.out.println(grandTotal);
     }
 }
