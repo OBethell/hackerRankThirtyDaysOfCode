@@ -5,20 +5,22 @@ import java.math.*;
 import java.util.regex.*;
 
 public class Solution {
-
+    
+    // Method to produce a factorial of an int
     static int factorial(int n) {
-        int ans = n;
-        int x;
-        for(x = n-1; x > 0;x--){
-            ans = ans * x;
+        // Cycle through all positive non-zero intergers lower than the input.
+        for(int x = n-1; x > 0; x--){
+            n *= x;
         }
-        return ans;
+        return n;
     }
 
     public static void main(String[] args) {
+        
+        // Initalise scanner
         Scanner in = new Scanner(System.in);
         int n = in.nextInt();
-        int result = factorial(n);
-        System.out.println(result);
+        // Print factorical
+        System.out.println(factorial(n));
     }
 }
